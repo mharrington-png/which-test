@@ -194,8 +194,8 @@
   /* stacked deck ghost cards */
   .deck-stack {
     position: relative;
-    width: min(560px, 92vw);
-    height: 420px;
+    width: min(680px, 92vw);
+    height: 500px;
   }
 
   .deck-stack .ghost {
@@ -249,19 +249,11 @@
     padding: 2.2rem 2.4rem;
   }
 
-  .card-number {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    margin-bottom: 1.2rem;
-    text-transform: uppercase;
-  }
 
   .scenario {
     font-family: var(--sans);
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    line-height: 1.75;
     color: var(--cream);
     font-weight: 300;
     flex: 1;
@@ -324,7 +316,7 @@
 
   .test-badge {
     font-family: var(--mono);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--crim);
@@ -350,16 +342,25 @@
 
   .answer-label {
     font-family: var(--mono);
-    font-size: 0.58rem;
+    font-size: 0.68rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 0.4rem;
   }
 
+  .card-number {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+  }
+
   .answer-text {
-    font-size: 0.82rem;
-    line-height: 1.55;
+    font-size: clamp(0.88rem, 1.5vw, 1.05rem);
+    line-height: 1.6;
     color: var(--reveal-text);
     font-weight: 300;
   }
