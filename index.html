@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,13 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Playfair Display', serif;
+  }
+
+  /* DARK MODE (default) */
+  :root, [data-theme="dark"] {
     --bg: #0f0e0c;
     --surface: #1a1814;
     --card-front: #1e1c19;
@@ -22,9 +29,37 @@
     --reveal-bg: #16211a;
     --reveal-border: #2a4034;
     --reveal-text: #8ecfa8;
-    --sans: 'DM Sans', sans-serif;
-    --mono: 'DM Mono', monospace;
-    --serif: 'Playfair Display', serif;
+    --ghost1: #181613;
+    --ghost2: #1b1916;
+    --ghost3: #1d1b18;
+    --alpha-bg: #161020;
+    --alpha-border: #2a2040;
+    --alpha-text: #c8bae8;
+    --alpha-label: #a08ad0;
+  }
+
+  /* LIGHT MODE */
+  [data-theme="light"] {
+    --bg: #f5f2ec;
+    --surface: #ede9e0;
+    --card-front: #ffffff;
+    --card-back: #f9f7f3;
+    --crim: #a8192e;
+    --gold: #9a6f1e;
+    --gold-light: #7a5214;
+    --cream: #1a1714;
+    --muted: #6b6560;
+    --border: #d4cfc4;
+    --reveal-bg: #eef5f1;
+    --reveal-border: #b8d9c5;
+    --reveal-text: #1d5c38;
+    --ghost1: #e8e4da;
+    --ghost2: #ede9e0;
+    --ghost3: #f0ece4;
+    --alpha-bg: #f0edf8;
+    --alpha-border: #c9bfe8;
+    --alpha-text: #3d2d6e;
+    --alpha-label: #6040a8;
   }
 
   html, body {
@@ -171,9 +206,9 @@
     transition: transform 0.3s ease;
   }
 
-  .deck-stack .ghost:nth-child(1) { background: #181613; transform: rotate(-3deg) translateY(6px); }
-  .deck-stack .ghost:nth-child(2) { background: #1b1916; transform: rotate(-1.5deg) translateY(3px); }
-  .deck-stack .ghost:nth-child(3) { background: #1d1b18; transform: rotate(1deg) translateY(1px); }
+  .deck-stack .ghost:nth-child(1) { background: var(--ghost1); transform: rotate(-3deg) translateY(6px); }
+  .deck-stack .ghost:nth-child(2) { background: var(--ghost2); transform: rotate(-1.5deg) translateY(3px); }
+  .deck-stack .ghost:nth-child(3) { background: var(--ghost3); transform: rotate(1deg) translateY(1px); }
 
   /* card */
   .card-wrapper {
@@ -325,7 +360,7 @@
   .answer-text {
     font-size: 0.82rem;
     line-height: 1.55;
-    color: #c8e8d4;
+    color: var(--reveal-text);
     font-weight: 300;
   }
 
@@ -335,14 +370,14 @@
   }
 
   .alpha-block {
-    background: #161020;
-    border: 1px solid #2a2040;
+    background: var(--alpha-bg);
+    border: 1px solid var(--alpha-border);
     border-radius: 4px;
     padding: 0.85rem 1rem;
   }
 
-  .alpha-block .answer-label { color: #a08ad0; }
-  .alpha-block .answer-text { color: #c8bae8; }
+  .alpha-block .answer-label { color: var(--alpha-label); }
+  .alpha-block .answer-text { color: var(--alpha-text); }
 
   .flip-back-hint {
     text-align: center;
@@ -493,6 +528,10 @@
     Shuffle Deck
   </button>
   <button class="btn btn-secondary" id="resetBtn">Reset</button>
+  <button class="btn btn-secondary" id="themeBtn">
+    <svg id="themeIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <span id="themeBtnLabel">Light Mode</span>
+  </button>
 </div>
 
 <div class="instruction">
@@ -786,6 +825,22 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' && current < CARDS.length - 1) navigateCard(current + 1, 'right');
   if (e.key === 'ArrowLeft' && current > 0) navigateCard(current - 1, 'left');
   if (e.key === ' ') { e.preventDefault(); cardInner.classList.toggle('flipped'); }
+});
+
+// theme toggle
+const themeBtn = document.getElementById('themeBtn');
+const themeBtnLabel = document.getElementById('themeBtnLabel');
+const moonIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+const sunIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+
+themeBtn.addEventListener('click', () => {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  themeBtn.querySelector('svg').outerHTML; // force repaint
+  themeBtn.innerHTML = isDark
+    ? `${moonIcon} <span id="themeBtnLabel">Dark Mode</span>`
+    : `${sunIcon} <span id="themeBtnLabel">Light Mode</span>`;
 });
 
 // init
